@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Atividade 01 - Separar Nome</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label { display:block; margin-top:8px; }
+    input { padding:6px; width:300px; margin-top:4px; }
+    button { margin-top:10px; padding:6px 12px; }
+  </style>
+</head>
+<body>
+  <h2>Atividade 01 — Separar Nome e Sobrenome</h2>
+
+  <label>Nome completo:
+    <input id="fullName" type="text" placeholder="Ex: Maria José Silva">
+  </label>
+
+  <button id="splitBtn">>></button>
+
+  <label>Nome:
+    <input id="firstName" type="text" readonly>
+  </label>
+
+  <label>Sobrenome:
+    <input id="lastName" type="text" readonly>
+  </label>
+
+  <script>
+    document.getElementById('splitBtn').addEventListener('click', function() {
+      const full = document.getElementById('fullName').value.trim();
+      if (!full) {
+        alert('Digite o nome completo primeiro.');
+        return;
+      }
+
+      // separa por espaços em branco múltiplos
+      const parts = full.split(/\s+/);
+      // primeiro token -> nome
+      const first = parts[0] || '';
+      // resto dos tokens -> sobrenome; se só 1 token, sobrenome fica vazio
+      const last = parts.length > 1 ? parts.slice(1).join(' ') : '';
+
+      document.getElementById('firstName').value = first;
+      document.getElementById('lastName').value = last;
+    });
+  </script>
+</body>
+</html>
