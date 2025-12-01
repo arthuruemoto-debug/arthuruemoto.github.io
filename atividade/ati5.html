@@ -76,40 +76,43 @@
         <input type="text" required><br>
 
         <label>Nascimento (dd/mm/aaaa):</label>
-        <input type="text" size="2" maxlength="2"> /
-        <input type="text" size="2" maxlength="2"> /
-        <input type="text" size="4" maxlength="4"><br>
+        <input type="text" size="2" maxlength="2" required> /
+        <input type="text" size="2" maxlength="2" required> /
+        <input type="text" size="4" maxlength="4" required><br>
 
         <label>Nome da Mãe:</label>
-        <input type="text"><br>
+        <input type="text" required><br>
 
         <label>Nome do Pai:</label>
         <input type="text"><br>
 
         <div class="linha">
             <label>Telefone:</label>
-            ( <input type="text" size="2" maxlength="2"> )
-            <input type="text" size="10" maxlength="10">
+            ( <input type="text" id="ddd" size="2" maxlength="2" required> ) 9
+            <input type="text" id="tel1" size="4" maxlength="4" required> -
+            <input type="text" id="tel2" size="4" maxlength="4" required>
             Ramal: <input type="text" size="5">
         </div>
 
         <label>E-mail:</label>
-        <input type="email">
+        <input type="email" required>
     </fieldset>
 
     <fieldset>
         <legend>Informações de Matrícula</legend>
 
         <label>Série:</label>
-        <select>
-            <option>pré-escolar</option>
-            <option>1º ano</option>
-            <option>2º ano</option>
+        <select required>
+            <option value="">Selecione</option>
+            <option>fundamental 1</option>
+            <option>fundamental 2</option>
+            <option>ensino médio</option>
+            <option>ensino superior</option>
         </select><br>
 
         <label>Turno:</label>
-        <input type="radio" name="turno" value="manhã"> Manhã
-        <input type="radio" name="turno" value="tarde"> Tarde <br><br>
+        <input type="radio" name="turno" value="manhã" required> Manhã
+        <input type="radio" name="turno" value="tarde" required> Tarde <br><br>
 
         <label>Atividades Extracurriculares:</label><br>
 
@@ -130,9 +133,40 @@
 </div>
 
 <script>
+    function validarFormulario() {
+        // Verificar campos obrigatórios (inputs e selects com required)
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        for (let field of requiredFields) {
+            if (!field.value.trim()) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return false;
+            }
+        }
+
+        // Verificar se pelo menos um turno foi selecionado (radio buttons)
+        const turnoSelecionado = document.querySelector('input[name="turno"]:checked');
+        if (!turnoSelecionado) {
+            alert('Por favor, selecione um turno.');
+            return false;
+        }
+
+        // Verificar telefone (DDD, tel1, tel2)
+        const ddd = document.getElementById('ddd').value;
+        const tel1 = document.getElementById('tel1').value;
+        const tel2 = document.getElementById('tel2').value;
+        if (!ddd || !tel1 || !tel2) {
+            alert('Por favor, preencha o telefone completo.');
+            return false;
+        }
+
+        return true;
+    }
+
     document.getElementById("formMatricula").addEventListener("submit", function(e){
         e.preventDefault();
-        alert("Formulário enviado com sucesso!");
+        if (validarFormulario()) {
+            alert("Formulário enviado com sucesso!");
+        }
     });
 </script>
 </body>
